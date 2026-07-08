@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { tagSubmission } from "@/lib/ai/tagSubmission";
 
 export async function POST(request: NextRequest) {
   let body: { body?: string; submitter_name?: string | null };
@@ -27,6 +28,28 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  const tag = await tagSubmission(text);
+  if (tag) {
+    const { data: tagged } = await supabase
+      .from("submissions")
+      .update({
+        ai_category: tag.category,
+        ai_category_source: tag.source,
+        ai_category_confidence: tag.category_confidence,
+        ai_category_review_status: "unreviewed",
+        ai_intensity_score: tag.intensity_score,
+        ai_intensity_score_source: tag.source,
+        ai_intensity_score_confidence: tag.intensity_confidence,
+        ai_intensity_score_review_status: "unreviewed",
+      })
+      .eq("id", data.id)
+      .select()
+      .single();
+    if (tagged) {
+      return NextResponse.json(tagged, { status: 201 });
+    }
   }
 
   return NextResponse.json(data, { status: 201 });

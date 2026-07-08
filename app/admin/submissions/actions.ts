@@ -31,6 +31,68 @@ export async function approveSubmission(id: string, painPointId: string | null) 
   revalidatePath("/admin/submissions");
 }
 
+export async function acceptAiTag(id: string) {
+  const supabase = await createClient();
+  const { data: existing } = await supabase.from("submissions").select("*").eq("id", id).single();
+
+  const { data, error } = await supabase
+    .from("submissions")
+    .update({
+      ai_category_review_status: "accepted",
+      ai_intensity_score_review_status: "accepted",
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  await writeAuditLog(supabase, {
+    action: "submission.ai_tag_accepted",
+    target_table: "submissions",
+    target_id: id,
+    old_value: existing,
+    new_value: data,
+    risk_level: "low",
+  });
+
+  revalidatePath("/admin/submissions");
+  revalidatePath("/pain-points");
+}
+
+export async function overrideAiTag(id: string, category: string) {
+  const supabase = await createClient();
+  const { data: existing } = await supabase.from("submissions").select("*").eq("id", id).single();
+
+  const { data, error } = await supabase
+    .from("submissions")
+    .update({
+      ai_category: category,
+      ai_category_review_status: "overridden",
+    })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  await writeAuditLog(supabase, {
+    action: "submission.ai_tag_overridden",
+    target_table: "submissions",
+    target_id: id,
+    old_value: existing,
+    new_value: data,
+    risk_level: "medium",
+  });
+
+  revalidatePath("/admin/submissions");
+  revalidatePath("/pain-points");
+}
+
 export async function rejectSubmission(id: string) {
   const supabase = await createClient();
   const { data: existing } = await supabase.from("submissions").select("*").eq("id", id).single();

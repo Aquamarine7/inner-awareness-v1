@@ -2,13 +2,15 @@
 
 import { useState, useTransition } from "react";
 import type { PainPoint, Submission } from "@/lib/types";
-import { approveSubmission, rejectSubmission } from "./actions";
+import { approveSubmission, rejectSubmission, acceptAiTag, overrideAiTag } from "./actions";
 
 const STATUS_STYLE: Record<Submission["status"], string> = {
   pending: "bg-amber-50 text-amber-700",
   approved: "bg-green-50 text-green-700",
   rejected: "bg-stone-100 text-stone-500",
 };
+
+const CATEGORIES = ["time", "money", "energy", "relationships", "direction"];
 
 export default function SubmissionRow({
   submission,
@@ -18,6 +20,7 @@ export default function SubmissionRow({
   painPoints: Pick<PainPoint, "id" | "title">[];
 }) {
   const [painPointId, setPainPointId] = useState(submission.pain_point_id ?? "");
+  const [overrideCategory, setOverrideCategory] = useState(submission.ai_category ?? CATEGORIES[0]);
   const [isPending, startTransition] = useTransition();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -43,8 +46,37 @@ export default function SubmissionRow({
     });
   }
 
+  function handleAcceptAiTag() {
+    setErrorMsg(null);
+    startTransition(async () => {
+      try {
+        await acceptAiTag(submission.id);
+      } catch (err) {
+        setErrorMsg(err instanceof Error ? err.message : "Failed to accept tag.");
+      }
+    });
+  }
+
+  function handleOverrideAiTag() {
+    setErrorMsg(null);
+    startTransition(async () => {
+      try {
+        await overrideAiTag(submission.id, overrideCategory);
+      } catch (err) {
+        setErrorMsg(err instanceof Error ? err.message : "Failed to override tag.");
+      }
+    });
+  }
+
+  const hasAiTag = !!submission.ai_category;
+  const isUnreviewed = submission.ai_category_review_status === "unreviewed";
+
   return (
-    <li className="rounded-lg border border-stone-200 bg-white p-5">
+    <li
+      className={`rounded-lg border bg-white p-5 ${
+        hasAiTag && isUnreviewed ? "border-amber-300 ring-1 ring-amber-200" : "border-stone-200"
+      }`}
+    >
       <div className="flex items-center justify-between gap-4">
         <span className="text-sm font-medium text-stone-900">
           {submission.submitter_name || "Anonymous"}
@@ -54,6 +86,58 @@ export default function SubmissionRow({
         </span>
       </div>
       <p className="mt-2 text-stone-700 text-sm">{submission.body}</p>
+
+      {hasAiTag && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+          <span className="rounded bg-stone-100 px-2 py-0.5 text-stone-600">
+            AI: {submission.ai_category}
+            {submission.ai_category_confidence != null &&
+              ` (${Math.round(submission.ai_category_confidence * 100)}%)`}
+          </span>
+          {submission.ai_intensity_score != null && (
+            <span className="rounded bg-stone-100 px-2 py-0.5 text-stone-600">
+              Intensity: {Math.round(submission.ai_intensity_score * 100)}%
+            </span>
+          )}
+          <span
+            className={`rounded px-2 py-0.5 uppercase tracking-wide ${
+              submission.ai_category_review_status === "unreviewed"
+                ? "bg-amber-100 text-amber-800"
+                : "bg-stone-100 text-stone-500"
+            }`}
+          >
+            {submission.ai_category_review_status}
+          </span>
+        </div>
+      )}
+
+      {hasAiTag && isUnreviewed && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button
+            onClick={handleAcceptAiTag}
+            disabled={isPending}
+            className="rounded-md border border-amber-300 bg-amber-50 text-amber-800 px-3 py-1 text-xs font-medium hover:bg-amber-100 disabled:opacity-60"
+          >
+            Accept AI tag
+          </button>
+          <select
+            value={overrideCategory}
+            onChange={(e) => setOverrideCategory(e.target.value)}
+            className="rounded-md border border-stone-300 px-2 py-1 text-xs bg-white"
+          >
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <button
+            onClick={handleOverrideAiTag}
+            disabled={isPending}
+            className="rounded-md border border-stone-300 px-3 py-1 text-xs hover:bg-stone-100 disabled:opacity-60"
+          >
+            Override
+          </button>
+        </div>
+      )}
 
       {submission.status === "pending" && (
         <div className="mt-4 flex flex-wrap items-center gap-2">
