@@ -30,6 +30,10 @@ export async function createPost(formData: FormData) {
   }
 
   const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   const { data, error } = await supabase
     .from("posts")
     .insert({
@@ -40,6 +44,7 @@ export async function createPost(formData: FormData) {
       pain_point_id: fields.pain_point_id,
       status: fields.status,
       published_at: fields.status === "published" ? new Date().toISOString() : null,
+      user_id: user?.id ?? null,
     })
     .select()
     .single();
