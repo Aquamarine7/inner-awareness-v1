@@ -27,6 +27,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin/subscribers" className="text-stone-600 hover:text-rose-900">
             Subscribers
           </Link>
+          <Link href="/admin/settings" className="text-stone-600 hover:text-rose-900">
+            Settings
+          </Link>
           <span className="text-stone-400">{user.email}</span>
           <LogoutButton />
         </nav>
