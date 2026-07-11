@@ -31,11 +31,7 @@ export default async function PostDetailPage({
 
   const post = data as unknown as PostWithPainPoint;
 
-  supabase
-    .from("posts")
-    .update({ view_count: post.view_count + 1 })
-    .eq("id", post.id)
-    .then(() => {});
+  supabase.rpc("increment_post_view", { post_id: post.id }).then(() => {});
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-12">
