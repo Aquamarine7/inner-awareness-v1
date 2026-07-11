@@ -45,21 +45,23 @@ export default async function AdminSubscribersPage({
           </div>
         ) : (
           <>
-            <table className="mt-6 w-full text-sm border-collapse">
-              <thead>
-                <tr className="text-left text-stone-500 border-b border-stone-200">
-                  <th className="py-2 pr-4">Email</th>
-                  <th className="py-2 pr-4">Name</th>
-                  <th className="py-2 pr-4">Status</th>
-                  <th className="py-2 pr-4"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {subscribers.map((s) => (
-                  <SubscriberRow key={s.id} subscriber={s} />
-                ))}
-              </tbody>
-            </table>
+            <div className="mt-6 overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="text-left text-stone-500 border-b border-stone-200">
+                    <th className="py-2 pr-4">Email</th>
+                    <th className="py-2 pr-4">Name</th>
+                    <th className="py-2 pr-4">Status</th>
+                    <th className="py-2 pr-4"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {subscribers.map((s) => (
+                    <SubscriberRow key={s.id} subscriber={s} />
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {totalPages > 1 && (
               <div className="mt-4 flex items-center gap-3 text-sm">

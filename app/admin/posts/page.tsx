@@ -35,41 +35,43 @@ export default async function AdminPostsPage() {
           No posts — create your first one.
         </div>
       ) : (
-        <table className="mt-6 w-full text-sm border-collapse">
-          <thead>
-            <tr className="text-left text-stone-500 border-b border-stone-200">
-              <th className="py-2 pr-4">Title</th>
-              <th className="py-2 pr-4">Status</th>
-              <th className="py-2 pr-4">Views</th>
-              <th className="py-2 pr-4"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {posts.map((post) => (
-              <tr key={post.id} className="border-b border-stone-100">
-                <td className="py-3 pr-4 font-medium text-stone-900">{post.title}</td>
-                <td className="py-3 pr-4">
-                  <span
-                    className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide ${
-                      post.status === "published"
-                        ? "bg-green-50 text-green-700"
-                        : "bg-stone-100 text-stone-600"
-                    }`}
-                  >
-                    {post.status}
-                  </span>
-                </td>
-                <td className="py-3 pr-4 text-stone-600">{post.view_count}</td>
-                <td className="py-3 pr-4 text-right space-x-3">
-                  <Link href={`/admin/posts/${post.id}/edit`} className="text-rose-900 hover:underline">
-                    Edit
-                  </Link>
-                  <DeletePostButton id={post.id} title={post.title} />
-                </td>
+        <div className="mt-6 overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="text-left text-stone-500 border-b border-stone-200">
+                <th className="py-2 pr-4">Title</th>
+                <th className="py-2 pr-4">Status</th>
+                <th className="py-2 pr-4">Views</th>
+                <th className="py-2 pr-4"></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {posts.map((post) => (
+                <tr key={post.id} className="border-b border-stone-100">
+                  <td className="py-3 pr-4 font-medium text-stone-900 whitespace-nowrap">{post.title}</td>
+                  <td className="py-3 pr-4">
+                    <span
+                      className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide whitespace-nowrap ${
+                        post.status === "published"
+                          ? "bg-green-50 text-green-700"
+                          : "bg-stone-100 text-stone-600"
+                      }`}
+                    >
+                      {post.status}
+                    </span>
+                  </td>
+                  <td className="py-3 pr-4 text-stone-600">{post.view_count}</td>
+                  <td className="py-3 pr-4 text-right space-x-3 whitespace-nowrap">
+                    <Link href={`/admin/posts/${post.id}/edit`} className="text-rose-900 hover:underline">
+                      Edit
+                    </Link>
+                    <DeletePostButton id={post.id} title={post.title} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
