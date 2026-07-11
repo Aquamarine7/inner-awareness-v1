@@ -1,1 +1,51 @@
 @import "tailwindcss";
+
+@theme {
+  /* Know Thyself — Iris Garden palette */
+  --color-iris: #a47dab;
+  --color-sage: #82ab7d;
+  --color-fig: #692475;
+  --color-olive: #6a6b4e;
+  --color-ink: #2f2633;
+  --color-paper: #f4efe7;
+
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-space-mono), ui-monospace, monospace;
+}
+
+/* Warm paper ground with a slow Iris → Sage radial wash (kept low-opacity so
+   ~60% of the field stays calm neutral, per the brand ratio). */
+body {
+  background-color: var(--color-paper);
+  background-image:
+    radial-gradient(
+      55rem 55rem at 12% -8%,
+      color-mix(in oklab, var(--color-iris) 20%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      48rem 48rem at 100% 2%,
+      color-mix(in oklab, var(--color-sage) 16%, transparent),
+      transparent 55%
+    );
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Display headings carry the literary Cormorant voice by default. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+/* Micro-labels / data — Space Mono, uppercase, airy tracking. */
+.label-mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}

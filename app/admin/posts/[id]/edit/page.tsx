@@ -28,7 +28,7 @@ export default async function EditPostPage({
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-stone-900">Edit Post</h2>
+      <h2 className="font-display text-2xl font-semibold text-ink">Edit Post</h2>
       <PostForm post={post as Post} painPoints={painPoints} action={updatePostWithId} />
     </div>
   );

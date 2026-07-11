@@ -19,33 +19,41 @@ export default async function PostsPage() {
   const posts = (data ?? []) as unknown as PostWithPainPoint[];
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight text-stone-900">Posts</h1>
-      <p className="mt-2 text-stone-600">Educational reads for career women navigating the daily grind.</p>
+    <div className="max-w-3xl mx-auto px-6 py-16">
+      <p className="label-mono text-[11px] text-fig/70">Reflections</p>
+      <h1 className="mt-2 font-display text-4xl font-semibold text-ink md:text-5xl">Posts</h1>
+      <p className="mt-3 max-w-xl text-lg text-ink/60">
+        Quiet, educational reads for women navigating the daily grind.
+      </p>
 
       {posts.length === 0 ? (
-        <div className="mt-10 rounded-lg border border-dashed border-stone-300 p-10 text-center text-stone-500">
+        <div className="mt-12 rounded-2xl border border-dashed border-ink/15 p-12 text-center text-ink/50">
           No posts published yet.
         </div>
       ) : (
-        <ul className="mt-8 space-y-6">
+        <ul className="mt-10 space-y-5">
           {posts.map((post) => (
-            <li key={post.id} className="rounded-lg border border-stone-200 bg-white p-6">
-              <Link href={`/posts/${post.slug}`} className="hover:underline">
-                <h2 className="text-xl font-semibold text-stone-900">{post.title}</h2>
+            <li
+              key={post.id}
+              className="rounded-2xl border border-ink/10 bg-white/70 p-6 backdrop-blur-sm transition-shadow hover:shadow-[0_8px_30px_-12px_rgba(47,38,51,0.15)]"
+            >
+              <Link href={`/posts/${post.slug}`} className="hover:text-fig">
+                <h2 className="font-display text-2xl font-semibold text-ink">{post.title}</h2>
               </Link>
-              {post.excerpt && <p className="mt-2 text-stone-600">{post.excerpt}</p>}
-              <div className="mt-3 flex items-center gap-3 text-xs text-stone-400">
+              {post.excerpt && <p className="mt-2 leading-relaxed text-ink/60">{post.excerpt}</p>}
+              <div className="mt-4 flex items-center gap-3">
                 {post.pain_points && (
                   <Link
                     href={`/pain-points`}
-                    className="uppercase tracking-wide text-rose-700 bg-rose-50 px-2 py-0.5 rounded hover:bg-rose-100"
+                    className="label-mono rounded-full bg-sage/15 px-2.5 py-0.5 text-[11px] text-olive hover:bg-sage/25"
                   >
                     {post.pain_points.title}
                   </Link>
                 )}
                 {post.published_at && (
-                  <span>{new Date(post.published_at).toLocaleDateString()}</span>
+                  <span className="label-mono text-[11px] text-ink/40">
+                    {new Date(post.published_at).toLocaleDateString()}
+                  </span>
                 )}
               </div>
             </li>

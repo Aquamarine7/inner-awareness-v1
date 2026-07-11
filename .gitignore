@@ -12,3 +12,7 @@ npm-debug.log*
 next-env.d.ts
 .env*
 supabase/.temp/
+
+# local dev helpers (machine-specific)
+.claude/
+dev.cmd

@@ -27,38 +27,38 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="max-w-sm mx-auto px-6 py-20">
-      <h1 className="text-2xl font-bold tracking-tight text-stone-900">Owner Login</h1>
-      <p className="mt-2 text-sm text-stone-600">Sign in to manage posts and submissions.</p>
+    <div className="max-w-sm mx-auto px-6 py-24">
+      <h1 className="font-display text-3xl font-semibold text-ink">Owner Login</h1>
+      <p className="mt-2 text-sm text-ink/60">Sign in to tend your posts and submissions.</p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-stone-700">Email</label>
+          <label htmlFor="email" className="block text-sm font-medium text-ink/70">Email</label>
           <input
             id="email"
             type="email"
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm"
+            className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
           />
         </div>
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-stone-700">Password</label>
+          <label htmlFor="password" className="block text-sm font-medium text-ink/70">Password</label>
           <input
             id="password"
             type="password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm"
+            className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
           />
         </div>
         {errorMsg && <p className="text-sm text-red-600">{errorMsg}</p>}
         <button
           type="submit"
           disabled={status === "loading"}
-          className="w-full rounded-md bg-rose-900 text-white px-4 py-2.5 text-sm font-medium hover:bg-rose-800 disabled:opacity-60"
+          className="w-full rounded-lg bg-fig px-4 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-fig/90 disabled:opacity-60"
         >
           {status === "loading" ? "Signing in…" : "Sign in"}
         </button>

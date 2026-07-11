@@ -12,7 +12,7 @@ export default async function NewPostPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-stone-900">New Post</h2>
+      <h2 className="font-display text-2xl font-semibold text-ink">New Post</h2>
       <PostForm painPoints={painPoints} action={createPost} />
     </div>
   );

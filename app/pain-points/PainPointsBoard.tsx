@@ -48,18 +48,19 @@ export default async function PainPointsBoard() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-12">
-      <h1 className="text-3xl font-bold tracking-tight text-stone-900">Pain Points</h1>
-      <p className="mt-2 text-stone-600">
-        The struggles career women 25–35 are naming most. Vote for what resonates.
+    <div className="max-w-3xl mx-auto px-6 py-16">
+      <p className="label-mono text-[11px] text-fig/70">The board</p>
+      <h1 className="mt-2 font-display text-4xl font-semibold text-ink md:text-5xl">Pain Points</h1>
+      <p className="mt-3 max-w-xl text-lg text-ink/60">
+        The struggles women 25–35 are naming most. Notice what resonates, and give it your voice.
       </p>
 
       {rankedPainPoints.length === 0 ? (
-        <div className="mt-10 rounded-lg border border-dashed border-stone-300 p-10 text-center text-stone-500">
+        <div className="mt-12 rounded-2xl border border-dashed border-ink/15 p-12 text-center text-ink/50">
           No pain points tracked yet.
         </div>
       ) : (
-        <ul className="mt-8 space-y-4">
+        <ul className="mt-10 space-y-4">
           {rankedPainPoints.map((pp) => (
             <li key={pp.id}>
               <PainPointCard painPoint={pp} topPostSlug={topPostByPainPoint.get(pp.id) ?? null} />

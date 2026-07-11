@@ -30,20 +30,20 @@ export default function SubscribeForm({ postId }: { postId: string }) {
   }
 
   if (status === "done") {
-    return <p className="mt-4 text-sm font-medium text-rose-900">You&apos;re in! Check your inbox soon.</p>;
+    return <p className="mt-4 text-sm font-medium text-fig">You&apos;re in. Check your inbox soon.</p>;
   }
   if (status === "duplicate") {
-    return <p className="mt-4 text-sm font-medium text-rose-900">You&apos;re already on the list.</p>;
+    return <p className="mt-4 text-sm font-medium text-fig">You&apos;re already on the list.</p>;
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-4 flex flex-col sm:flex-row gap-2">
+    <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-2 sm:flex-row">
       <input
         type="text"
         placeholder="First name (optional)"
         value={firstName}
         onChange={(e) => setFirstName(e.target.value)}
-        className="rounded-md border border-rose-200 px-3 py-2 text-sm bg-white flex-1"
+        className="flex-1 rounded-lg border border-iris/25 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
       />
       <input
         type="email"
@@ -51,12 +51,12 @@ export default function SubscribeForm({ postId }: { postId: string }) {
         placeholder="you@email.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="rounded-md border border-rose-200 px-3 py-2 text-sm bg-white flex-1"
+        className="flex-1 rounded-lg border border-iris/25 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
       />
       <button
         type="submit"
         disabled={status === "loading"}
-        className="rounded-md bg-rose-900 text-white px-4 py-2 text-sm font-medium hover:bg-rose-800 disabled:opacity-60"
+        className="rounded-lg bg-fig px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-fig/90 disabled:opacity-60"
       >
         {status === "loading" ? "Joining…" : "Subscribe"}
       </button>

@@ -7,7 +7,7 @@ import { approveSubmission, rejectSubmission, acceptAiTag, overrideAiTag } from 
 const STATUS_STYLE: Record<Submission["status"], string> = {
   pending: "bg-amber-50 text-amber-700",
   approved: "bg-green-50 text-green-700",
-  rejected: "bg-stone-100 text-stone-500",
+  rejected: "bg-ink/[0.06] text-ink/50",
 };
 
 const CATEGORIES = ["time", "money", "energy", "relationships", "direction"];
@@ -74,28 +74,28 @@ export default function SubmissionRow({
   return (
     <li
       className={`rounded-lg border bg-white p-5 ${
-        hasAiTag && isUnreviewed ? "border-amber-300 ring-1 ring-amber-200" : "border-stone-200"
+        hasAiTag && isUnreviewed ? "border-amber-300 ring-1 ring-amber-200" : "border-ink/10"
       }`}
     >
       <div className="flex items-center justify-between gap-4">
-        <span className="text-sm font-medium text-stone-900">
+        <span className="text-sm font-medium text-ink">
           {submission.submitter_name || "Anonymous"}
         </span>
         <span className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide ${STATUS_STYLE[submission.status]}`}>
           {submission.status}
         </span>
       </div>
-      <p className="mt-2 text-stone-700 text-sm">{submission.body}</p>
+      <p className="mt-2 text-ink/70 text-sm">{submission.body}</p>
 
       {hasAiTag && (
         <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
-          <span className="rounded bg-stone-100 px-2 py-0.5 text-stone-600">
+          <span className="rounded bg-ink/[0.06] px-2 py-0.5 text-ink/60">
             AI: {submission.ai_category}
             {submission.ai_category_confidence != null &&
               ` (${Math.round(submission.ai_category_confidence * 100)}%)`}
           </span>
           {submission.ai_intensity_score != null && (
-            <span className="rounded bg-stone-100 px-2 py-0.5 text-stone-600">
+            <span className="rounded bg-ink/[0.06] px-2 py-0.5 text-ink/60">
               Intensity: {Math.round(submission.ai_intensity_score * 100)}%
             </span>
           )}
@@ -103,7 +103,7 @@ export default function SubmissionRow({
             className={`rounded px-2 py-0.5 uppercase tracking-wide ${
               submission.ai_category_review_status === "unreviewed"
                 ? "bg-amber-100 text-amber-800"
-                : "bg-stone-100 text-stone-500"
+                : "bg-ink/[0.06] text-ink/50"
             }`}
           >
             {submission.ai_category_review_status}
@@ -123,7 +123,7 @@ export default function SubmissionRow({
           <select
             value={overrideCategory}
             onChange={(e) => setOverrideCategory(e.target.value)}
-            className="rounded-md border border-stone-300 px-2 py-1 text-xs bg-white"
+            className="rounded-md border border-ink/15 px-2 py-1 text-xs bg-white"
           >
             {CATEGORIES.map((c) => (
               <option key={c} value={c}>{c}</option>
@@ -132,7 +132,7 @@ export default function SubmissionRow({
           <button
             onClick={handleOverrideAiTag}
             disabled={isPending}
-            className="rounded-md border border-stone-300 px-3 py-1 text-xs hover:bg-stone-100 disabled:opacity-60"
+            className="rounded-md border border-ink/15 px-3 py-1 text-xs hover:bg-iris/10 disabled:opacity-60"
           >
             Override
           </button>
@@ -144,7 +144,7 @@ export default function SubmissionRow({
           <select
             value={painPointId}
             onChange={(e) => setPainPointId(e.target.value)}
-            className="rounded-md border border-stone-300 px-2 py-1.5 text-sm bg-white"
+            className="rounded-md border border-ink/15 px-2 py-1.5 text-sm bg-white"
           >
             <option value="">Link to pain point (optional)</option>
             {painPoints.map((pp) => (
@@ -154,14 +154,14 @@ export default function SubmissionRow({
           <button
             onClick={handleApprove}
             disabled={isPending}
-            className="rounded-md bg-rose-900 text-white px-3 py-1.5 text-sm font-medium hover:bg-rose-800 disabled:opacity-60"
+            className="rounded-lg bg-fig px-3 py-1.5 text-sm font-medium text-paper transition-colors hover:bg-fig/90 disabled:opacity-60"
           >
             {isPending ? "Working…" : "Approve"}
           </button>
           <button
             onClick={handleReject}
             disabled={isPending}
-            className="rounded-md border border-stone-300 px-3 py-1.5 text-sm hover:bg-stone-100 disabled:opacity-60"
+            className="rounded-md border border-ink/15 px-3 py-1.5 text-sm hover:bg-iris/10 disabled:opacity-60"
           >
             Reject
           </button>

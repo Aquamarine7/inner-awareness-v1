@@ -21,48 +21,48 @@ export default async function AdminPostsPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-stone-900">Posts</h2>
+        <h2 className="font-display text-2xl font-semibold text-ink">Posts</h2>
         <Link
           href="/admin/posts/new"
-          className="rounded-md bg-rose-900 text-white px-4 py-2 text-sm font-medium hover:bg-rose-800"
+          className="rounded-lg bg-fig px-4 py-2 text-sm font-medium text-paper transition-colors hover:bg-fig/90"
         >
           New Post
         </Link>
       </div>
 
       {posts.length === 0 ? (
-        <div className="mt-8 rounded-lg border border-dashed border-stone-300 p-10 text-center text-stone-500">
+        <div className="mt-8 rounded-2xl border border-dashed border-ink/15 p-10 text-center text-ink/50">
           No posts — create your first one.
         </div>
       ) : (
         <div className="mt-6 overflow-x-auto">
           <table className="w-full text-sm border-collapse">
             <thead>
-              <tr className="text-left text-stone-500 border-b border-stone-200">
-                <th className="py-2 pr-4">Title</th>
-                <th className="py-2 pr-4">Status</th>
-                <th className="py-2 pr-4">Views</th>
+              <tr className="label-mono border-b border-ink/10 text-left text-[11px] text-ink/40">
+                <th className="py-2 pr-4 font-normal">Title</th>
+                <th className="py-2 pr-4 font-normal">Status</th>
+                <th className="py-2 pr-4 font-normal">Views</th>
                 <th className="py-2 pr-4"></th>
               </tr>
             </thead>
             <tbody>
               {posts.map((post) => (
-                <tr key={post.id} className="border-b border-stone-100">
-                  <td className="py-3 pr-4 font-medium text-stone-900 whitespace-nowrap">{post.title}</td>
+                <tr key={post.id} className="border-b border-ink/[0.07]">
+                  <td className="py-3 pr-4 font-medium text-ink whitespace-nowrap">{post.title}</td>
                   <td className="py-3 pr-4">
                     <span
-                      className={`text-xs px-2 py-0.5 rounded uppercase tracking-wide whitespace-nowrap ${
+                      className={`label-mono rounded-full px-2.5 py-0.5 text-[11px] whitespace-nowrap ${
                         post.status === "published"
-                          ? "bg-green-50 text-green-700"
-                          : "bg-stone-100 text-stone-600"
+                          ? "bg-sage/15 text-olive"
+                          : "bg-ink/[0.06] text-ink/50"
                       }`}
                     >
                       {post.status}
                     </span>
                   </td>
-                  <td className="py-3 pr-4 text-stone-600">{post.view_count}</td>
+                  <td className="py-3 pr-4 text-ink/60">{post.view_count}</td>
                   <td className="py-3 pr-4 text-right space-x-3 whitespace-nowrap">
-                    <Link href={`/admin/posts/${post.id}/edit`} className="text-rose-900 hover:underline">
+                    <Link href={`/admin/posts/${post.id}/edit`} className="text-fig hover:underline">
                       Edit
                     </Link>
                     <DeletePostButton id={post.id} title={post.title} />

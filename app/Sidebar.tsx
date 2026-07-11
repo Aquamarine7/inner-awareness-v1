@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import LogoutButton from "./admin/LogoutButton";
+import BrandMark from "./BrandMark";
 
 const PUBLIC_LINKS = [
   { href: "/pain-points", label: "Pain Points" },
@@ -18,6 +19,15 @@ const ADMIN_LINKS = [
   { href: "/admin/subscribers", label: "Subscribers" },
   { href: "/admin/settings", label: "Settings" },
 ];
+
+function Wordmark() {
+  return (
+    <Link href="/" className="flex items-center gap-2 px-3 py-5 text-fig">
+      <BrandMark className="h-6 w-6 text-fig" />
+      <span className="font-display text-xl font-semibold tracking-tight">Inner Awareness</span>
+    </Link>
+  );
+}
 
 function NavLink({
   href,
@@ -34,8 +44,10 @@ function NavLink({
     <Link
       href={href}
       onClick={onClick}
-      className={`block rounded-md px-3 py-2 text-sm transition-colors ${
-        active ? "bg-rose-50 text-rose-900 font-medium" : "text-stone-600 hover:bg-stone-100 hover:text-rose-900"
+      className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
+        active
+          ? "bg-iris/15 text-fig font-medium"
+          : "text-ink/70 hover:bg-iris/10 hover:text-fig"
       }`}
     >
       {label}
@@ -67,11 +79,11 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           />
         ))}
 
-        <div className="my-3 border-t border-stone-200" />
+        <div className="my-3 border-t border-ink/10" />
 
         {inAdmin ? (
           <>
-            <p className="px-3 pb-1 text-xs uppercase tracking-wide text-stone-400">Admin</p>
+            <p className="label-mono px-3 pb-1 text-[11px] text-ink/40">Admin</p>
             {ADMIN_LINKS.map((link) => (
               <NavLink
                 key={link.href}
@@ -88,8 +100,8 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       </nav>
 
       {inAdmin && (
-        <div className="border-t border-stone-200 px-3 py-4 space-y-2">
-          {email && <p className="truncate text-xs text-stone-400">{email}</p>}
+        <div className="border-t border-ink/10 px-3 py-4 space-y-2">
+          {email && <p className="label-mono truncate text-[11px] text-ink/40">{email}</p>}
           <LogoutButton />
         </div>
       )}
@@ -103,7 +115,7 @@ function MobileMenuButton({ open, onToggle }: { open: boolean; onToggle: () => v
       onClick={onToggle}
       aria-label={open ? "Close menu" : "Open menu"}
       aria-expanded={open}
-      className="flex h-9 w-9 items-center justify-center rounded-md text-stone-600 hover:bg-stone-100"
+      className="flex h-9 w-9 items-center justify-center rounded-md text-ink/70 hover:bg-iris/10"
     >
       {open ? (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -128,22 +140,21 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="hidden md:fixed md:inset-y-0 md:left-0 md:flex md:w-56 md:flex-col md:border-r md:border-stone-200 md:bg-white">
-        <Link href="/" className="block px-3 py-4 font-semibold tracking-tight text-rose-900">
-          Inner Awareness
-        </Link>
+      <aside className="hidden md:fixed md:inset-y-0 md:left-0 md:flex md:w-60 md:flex-col md:border-r md:border-ink/10 md:bg-paper/70 md:backdrop-blur-sm">
+        <Wordmark />
         <NavLinks />
       </aside>
 
-      <header className="border-b border-stone-200 bg-white md:hidden">
+      <header className="border-b border-ink/10 bg-paper/80 backdrop-blur-sm md:hidden">
         <nav className="flex items-center justify-between px-4 py-3">
-          <Link href="/" className="font-semibold tracking-tight text-rose-900">
-            Inner Awareness
+          <Link href="/" className="flex items-center gap-2 text-fig">
+            <BrandMark className="h-5 w-5 text-fig" />
+            <span className="font-display text-lg font-semibold tracking-tight">Inner Awareness</span>
           </Link>
           <MobileMenuButton open={mobileOpen} onToggle={() => setMobileOpen((v) => !v)} />
         </nav>
         {mobileOpen && (
-          <div className="flex flex-col border-t border-stone-200 pb-2 pt-2">
+          <div className="flex flex-col border-t border-ink/10 pb-2 pt-2">
             <NavLinks onNavigate={() => setMobileOpen(false)} />
           </div>
         )}

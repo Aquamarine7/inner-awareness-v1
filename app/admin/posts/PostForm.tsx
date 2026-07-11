@@ -32,33 +32,33 @@ export default function PostForm({
   return (
     <form action={handleSubmit} className="mt-6 space-y-4 max-w-2xl">
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-stone-700">Title</label>
+        <label htmlFor="title" className="block text-sm font-medium text-ink/70">Title</label>
         <input
           id="title"
           name="title"
           required
           defaultValue={post?.title}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
         />
       </div>
       <div>
-        <label htmlFor="slug" className="block text-sm font-medium text-stone-700">
+        <label htmlFor="slug" className="block text-sm font-medium text-ink/70">
           Slug (leave blank to auto-generate)
         </label>
         <input
           id="slug"
           name="slug"
           defaultValue={post?.slug}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
         />
       </div>
       <div>
-        <label htmlFor="pain_point_id" className="block text-sm font-medium text-stone-700">Pain Point</label>
+        <label htmlFor="pain_point_id" className="block text-sm font-medium text-ink/70">Pain Point</label>
         <select
           id="pain_point_id"
           name="pain_point_id"
           defaultValue={post?.pain_point_id ?? ""}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm bg-white"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40 bg-white"
         >
           <option value="">— None —</option>
           {painPoints.map((pp) => (
@@ -67,33 +67,33 @@ export default function PostForm({
         </select>
       </div>
       <div>
-        <label htmlFor="excerpt" className="block text-sm font-medium text-stone-700">Excerpt</label>
+        <label htmlFor="excerpt" className="block text-sm font-medium text-ink/70">Excerpt</label>
         <textarea
           id="excerpt"
           name="excerpt"
           rows={2}
           defaultValue={post?.excerpt ?? ""}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40"
         />
       </div>
       <div>
-        <label htmlFor="body" className="block text-sm font-medium text-stone-700">Body</label>
+        <label htmlFor="body" className="block text-sm font-medium text-ink/70">Body</label>
         <textarea
           id="body"
           name="body"
           required
           rows={12}
           defaultValue={post?.body ?? ""}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm font-mono"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40 font-mono"
         />
       </div>
       <div>
-        <label htmlFor="status" className="block text-sm font-medium text-stone-700">Status</label>
+        <label htmlFor="status" className="block text-sm font-medium text-ink/70">Status</label>
         <select
           id="status"
           name="status"
           defaultValue={post?.status ?? "draft"}
-          className="mt-1 w-full rounded-md border border-stone-300 px-3 py-2 text-sm bg-white"
+          className="mt-1.5 w-full rounded-lg border border-ink/15 bg-white/80 px-3 py-2 text-sm outline-none focus:border-fig/40 bg-white"
         >
           <option value="draft">Draft</option>
           <option value="published">Published</option>
@@ -105,7 +105,7 @@ export default function PostForm({
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-md bg-rose-900 text-white px-5 py-2.5 text-sm font-medium hover:bg-rose-800 disabled:opacity-60"
+        className="rounded-lg bg-fig px-5 py-2.5 text-sm font-medium text-paper transition-colors hover:bg-fig/90 disabled:opacity-60"
       >
         {isPending ? "Saving…" : "Save"}
       </button>

@@ -35,12 +35,12 @@ export default async function AdminSubscribersPage({
   return (
     <div className="space-y-10">
       <div>
-        <h2 className="text-lg font-semibold text-stone-900">
-          Subscribers <span className="text-stone-400 font-normal">({total})</span>
+        <h2 className="font-display text-2xl font-semibold text-ink">
+          Subscribers <span className="text-ink/40 font-normal">({total})</span>
         </h2>
 
         {subscribers.length === 0 ? (
-          <div className="mt-6 rounded-lg border border-dashed border-stone-300 p-10 text-center text-stone-500">
+          <div className="mt-6 rounded-lg border border-dashed border-ink/15 p-10 text-center text-ink/50">
             No subscribers yet.
           </div>
         ) : (
@@ -48,7 +48,7 @@ export default async function AdminSubscribersPage({
             <div className="mt-6 overflow-x-auto">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="text-left text-stone-500 border-b border-stone-200">
+                  <tr className="text-left text-ink/50 border-b border-ink/10">
                     <th className="py-2 pr-4">Email</th>
                     <th className="py-2 pr-4">Name</th>
                     <th className="py-2 pr-4">Status</th>
@@ -66,15 +66,15 @@ export default async function AdminSubscribersPage({
             {totalPages > 1 && (
               <div className="mt-4 flex items-center gap-3 text-sm">
                 {page > 1 && (
-                  <a href={`/admin/subscribers?page=${page - 1}`} className="text-rose-900 hover:underline">
+                  <a href={`/admin/subscribers?page=${page - 1}`} className="text-fig hover:underline">
                     ← Previous
                   </a>
                 )}
-                <span className="text-stone-400">
+                <span className="text-ink/40">
                   Page {page} of {totalPages}
                 </span>
                 {page < totalPages && (
-                  <a href={`/admin/subscribers?page=${page + 1}`} className="text-rose-900 hover:underline">
+                  <a href={`/admin/subscribers?page=${page + 1}`} className="text-fig hover:underline">
                     Next →
                   </a>
                 )}
